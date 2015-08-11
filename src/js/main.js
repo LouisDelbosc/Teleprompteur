@@ -1,18 +1,15 @@
 import App from './components/App';
-import Home from './components/Home';
-import About from './components/About';
-import Login from './components/Login';
-import UserPage from './components/UserPage';
+import Form from './components/Form'
+import Prompteur from './components/Prompteur'
 import React from 'react';
 import Router from 'react-router';
 import {DefaultRoute, Route, Routes, NotFoundRoute} from 'react-router';
 
 let routes = (
   <Route name="app" path="/" handler={App} >
-    <Route name="about" handler={About} />
-    <Route name="user" handler={UserPage} />
-    <Route name="login" handler={Login} />
-    <DefaultRoute handler={Home} />
+    <Route name="form" handler={Form} />
+    <Route name="Prompteur" handler={Prompteur} />
+    <DefaultRoute handler={Form} />
   </Route>
 );
 

@@ -1,21 +1,30 @@
 import React from 'react'
+import Store from '../store/Store'
+import reactMixin from 'react-mixin'
+import {Navigation} from 'react-router'
 
-class Form extends React.Component {
+export default class Form extends React.Component {
 
-  handleClick() {
+  handleClick(e) {
+    e.preventDefault();
     let text = document.getElementById('text').value;
-    console.log(text);
+    this.transition(text)
+  }
+
+  transition(text) {
+    Store.saveText(text);
+    this.transitionTo('prompteur')
   }
 
   render(){
     return(
-      <div className="Form" >
+      <div className="form" >
         <input type="text" id="text" placeholder="text you wanna display" />
-        <button onClick={this.handleClick} >CLick</button>
+        <button onClick={this.handleClick.bind(this)}>Click</button>
       </div>
     )
   }
 
 }
 
-export default Form
+reactMixin.onClass(Form, Navigation)

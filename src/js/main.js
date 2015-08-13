@@ -8,7 +8,7 @@ import {DefaultRoute, Route, Routes, NotFoundRoute} from 'react-router';
 let routes = (
   <Route name="app" path="/" handler={App} >
     <Route name="form" handler={Form} />
-    <Route name="Prompteur" handler={Prompteur} />
+    <Route name="prompteur" handler={Prompteur} />
     <DefaultRoute handler={Form} />
   </Route>
 );

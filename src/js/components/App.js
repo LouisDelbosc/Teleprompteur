@@ -8,8 +8,8 @@ class App extends React.Component {
       <div className="app" >
         <ul>
           <li><Link to="/" >Home</Link></li>
-          <li><Link to="form" >UserPage</Link></li>
-          <li><Link to="prompteur" >About</Link></li>
+          <li><Link to="form" >Form</Link></li>
+          <li><Link to="prompteur" >Texte</Link></li>
         </ul>
         <RouteHandler />
       </div>

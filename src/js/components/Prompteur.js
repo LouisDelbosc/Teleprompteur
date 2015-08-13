@@ -1,6 +1,6 @@
 import React from 'react'
 
-class Prompteur extends React.Components {
+class Prompteur extends React.Component {
 
   render(){
     return(

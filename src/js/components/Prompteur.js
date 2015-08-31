@@ -20,8 +20,13 @@ export default class Prompteur extends React.Component {
   }
 
   render(){
+    var divStyle = {
+      fontSize: '40',
+    };
     return(
-      <div className="pompteur" >
+      <div className="pompteur" key='1'
+        style={divStyle}
+        >
         <p>text</p> 
         <div className="container-fluid" >
           {this.state.text}

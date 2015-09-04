@@ -8,7 +8,7 @@ export default class Form extends React.Component {
   handleClick(e) {
     e.preventDefault();
     let text = document.getElementById('text').value;
-    this.transition(text)
+    this.transition(text);
   }
 
   transition(text) {
@@ -20,6 +20,7 @@ export default class Form extends React.Component {
     return(
       <div className="form" >
         <input type="text" id="text" placeholder="text you wanna display" />
+        <input type="number" id="number" placeholder="font size" />
         <button onClick={this.handleClick.bind(this)}>Click</button>
       </div>
     )

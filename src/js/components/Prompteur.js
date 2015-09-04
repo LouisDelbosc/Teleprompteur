@@ -6,22 +6,33 @@ export default class Prompteur extends React.Component {
   constructor() {
     super();
     let textToDisplay = Store.getText();
+    let fontSize = Store.getFontSize();
     this.state = {
-      text: textToDisplay
+      text: textToDisplay,
+      fontSize: fontSize
     };
   }
 
   componentDidMount(){
-    console.log('mounted');
+    Store.onChange = this.onChange.bind(this)
   }
 
   componentWillUnmount() {
     this.setState({});
   }
 
+  onChange() {
+    let fontSize = Store.getFontSize();
+    console.log(fontSize);
+    this.setState({
+      fontSize: fontSize
+    });
+  }
+
   render(){
     var divStyle = {
-      fontSize: '40',
+      fontSize: this.state.fontSize,
+      fontFamily: 'Arial'
     };
     return(
       <div className="pompteur" key='1'
@@ -36,3 +47,4 @@ export default class Prompteur extends React.Component {
   }
 
 }
+

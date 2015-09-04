@@ -19,9 +19,10 @@ export default class Form extends React.Component {
   render(){
     return(
       <div className="form" >
-        <input type="text" id="text" placeholder="text you wanna display" />
-        <input type="number" id="number" placeholder="font size" />
-        <button onClick={this.handleClick.bind(this)}>Click</button>
+        <form action="return false;" >
+          <input type="text" id="text" placeholder="text you wanna display" />
+          <button onClick={this.handleClick.bind(this)}>Click</button>
+        </form>
       </div>
     )
   }

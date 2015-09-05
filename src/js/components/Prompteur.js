@@ -2,6 +2,7 @@ import Store from '../store/Store'
 import React from 'react'
 import $ from 'jquery'
 import scrollTo from 'jquery.scrollto'
+import toastr from 'toastr'
 
 export default class Prompteur extends React.Component {
 
@@ -16,9 +17,43 @@ export default class Prompteur extends React.Component {
     };
   }
 
-  startScroll(e) {
+  handleClick(e) {
     e.preventDefault();
-    $(window).scrollTo('+=' + this.state.pixelScroll, 800);
+    let scrollTime = this.state.pixelScroll;
+    let scrollSize = $(document).height() - $(window).height();
+    if(this.state.pixelScroll === undefined) {
+      toastr.error('Update the number of pixel by second');
+    } else {
+      let nbIteration = Math.ceil(scrollSize/1000);
+      console.log(nbIteration);
+      this.scrolling(scrollTime, nbIteration);
+    }
+  }
+
+  scrolling(scrollTime, nbIteration) {
+    console.log(nbIteration);
+    if( nbIteration < 0 ) {
+      console.log('fini !!');
+      return;
+    } else {
+      $(window).scrollTo(
+        '+=1000',
+        scrollTime*1000,
+        {easing: 'linear',
+          interrupt: true,
+          onAfter: function() {
+            nbIteration = Math.ceil(this.state.pixelScroll / 1000)
+            this.scrolling(scrollTime, nbIteration );
+          }
+        });
+    }
+  }
+
+  buttonTest(e) {
+    e.preventDefault();
+    console.log($(document).height());
+    console.log($(document).height() - $(window).height());
+    console.log($(document).scrollTop());
   }
 
   componentDidMount(){
@@ -36,8 +71,6 @@ export default class Prompteur extends React.Component {
       fontSize: fontSize,
       pixelScroll: nbPixel
     });
-    console.log(this.state);
-    console.log(nbPixel);
   }
 
   render(){
@@ -49,11 +82,12 @@ export default class Prompteur extends React.Component {
       <div className="pompteur" key='1'
         style={divStyle}
         >
-        <button onClick={this.startScroll.bind(this)} > scroll </button>
+        <button onClick={this.handleClick.bind(this)} > scroll </button>
         <p>text</p> 
         <div className="container-fluid" >
           {this.state.text}
         </div>
+        <button onClick={this.buttonTest.bind(this)} > position </button>
       </div>
     )
   }

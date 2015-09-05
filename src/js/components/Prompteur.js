@@ -1,5 +1,7 @@
 import Store from '../store/Store'
 import React from 'react'
+import $ from 'jquery'
+import scrollTo from 'jquery.scrollto'
 
 export default class Prompteur extends React.Component {
 
@@ -7,10 +9,16 @@ export default class Prompteur extends React.Component {
     super();
     let textToDisplay = Store.getText();
     let fontSize = Store.getFontSize();
+    let pixelScroll = Store.getPixelScroll();
     this.state = {
       text: textToDisplay,
       fontSize: fontSize
     };
+  }
+
+  startScroll(e) {
+    e.preventDefault();
+    $(window).scrollTo('+=' + this.state.pixelScroll, 800);
   }
 
   componentDidMount(){
@@ -23,10 +31,13 @@ export default class Prompteur extends React.Component {
 
   onChange() {
     let fontSize = Store.getFontSize();
-    console.log(fontSize);
+    let nbPixel = Store.getPixelScroll();
     this.setState({
-      fontSize: fontSize
+      fontSize: fontSize,
+      pixelScroll: nbPixel
     });
+    console.log(this.state);
+    console.log(nbPixel);
   }
 
   render(){
@@ -38,6 +49,7 @@ export default class Prompteur extends React.Component {
       <div className="pompteur" key='1'
         style={divStyle}
         >
+        <button onClick={this.startScroll.bind(this)} > scroll </button>
         <p>text</p> 
         <div className="container-fluid" >
           {this.state.text}

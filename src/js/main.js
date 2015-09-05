@@ -5,6 +5,8 @@ import React from 'react';
 import Router from 'react-router';
 import {DefaultRoute, Route, Routes, NotFoundRoute} from 'react-router';
 
+require('toastr/build/toastr.min.css');
+
 let routes = (
   <Route name="app" path="/" handler={App} >
     <Route name="form" handler={Form} />

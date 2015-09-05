@@ -8,6 +8,10 @@ class App extends React.Component {
     Store.saveFontSize(e.target.value);
   }
 
+  handlePixelChange(e) {
+    Store.savePixelScroll(e.target.value);
+  }
+
   render() {
     var style = {
       color: 'white',
@@ -26,6 +30,13 @@ class App extends React.Component {
               id="number" 
               onChange={this.handleChange}
               placeholder="font size" />
+          </li>
+          <li>
+            <input
+              type="number"
+              id="pixel"
+              onChange={this.handlePixelChange}
+              placeholder="pixel/sec" />
           </li>
         </ul>
         <RouteHandler />

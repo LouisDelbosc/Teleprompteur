@@ -3,7 +3,7 @@ var Store = {
   state: {
     text: '',
     fontSize: 50,
-    speed: '200'
+    speed: 200
   },
 
   saveText(text) {
@@ -18,6 +18,7 @@ var Store = {
   saveSpeed(nbPixel) {
     this.state.speed = nbPixel;
     this.onChangeSpeed();
+    this.onChangeSpeedNavBar();
   },
 
   getText() {
@@ -33,6 +34,8 @@ var Store = {
   },
 
   onChangeFont() {},
+
+  onChangeSpeedNavBar() {},
 
   onChangeSpeed() {}
 

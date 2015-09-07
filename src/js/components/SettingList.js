@@ -1,5 +1,6 @@
 import React from 'react'
 import Store from '../store/Store'
+import Mousetrap from 'mousetrap'
 
 export default class SettingList extends React.Component {
 
@@ -23,6 +24,17 @@ export default class SettingList extends React.Component {
     this.setState({
       speed: e.target.value
     });
+  }
+
+  onChangeSpeedNavBar() {
+    let newSpeed = Store.getSpeed();
+    this.setState({
+      speed: newSpeed
+    });
+  }
+
+  componentDidMount() {
+    Store.onChangeSpeedNavBar = this.onChangeSpeedNavBar.bind(this);
   }
 
   render() {

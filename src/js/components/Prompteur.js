@@ -17,6 +17,24 @@ export default class Prompteur extends React.Component {
     };
   }
 
+  addSpeed() {
+    this.setState(function(previousState, currentProps) {
+      return { speed: previousState.speed + 2 };
+    });
+    Store.saveSpeed(this.state.speed);
+    $(window).stop();
+    this.startScrolling();
+  }
+
+  lessSpeed() {
+    this.setState(function(previousState, currentProps) {
+      return { speed: previousState.speed - 2 };
+    });
+    Store.saveSpeed(this.state.speed);
+    $(window).stop();
+    this.startScrolling();
+  }
+
   endCondition() {
     return $(document).scrollTop() === $(document).height() - $(window).height();
   }
@@ -49,7 +67,7 @@ export default class Prompteur extends React.Component {
   }
 
   startScrolling() {
-    let scrollSize = $(document).height() - $(window).height();
+    let scrollSize = $(document).height() - $(document).scrollTop() - $(window).height();
     if(this.state.speed === undefined || this.state.speed <= 0) {
       toastr.error('Speed not correct');
     } else {
@@ -61,7 +79,7 @@ export default class Prompteur extends React.Component {
   scrolling(scrollTime, nbIteration) {
     console.log(nbIteration);
     if( nbIteration < 0 || this.endCondition()) {
-      console.log('fini !!');
+      this.setState({ run: false });
       return;
     } else {
       $(window).scrollTo(
@@ -70,8 +88,8 @@ export default class Prompteur extends React.Component {
         {easing: 'linear',
           interrupt: true,
           onAfter: function() {
-            nbIteration = Math.ceil(this.state.speed / 1000);
-            this.scrolling(scrollTime, nbIteration );
+            let scrollSize = $(document).height() - $(document).scrollTop() - $(window).height();
+            this.scrolling(scrollTime, Math.ceil(scrollSize / 1000) );
           }.bind(this)
         });
     }
@@ -79,9 +97,6 @@ export default class Prompteur extends React.Component {
 
   buttonTest(e) {
     e.preventDefault();
-    console.log($(document).height());
-    console.log($(document).height() - $(window).height());
-    console.log($(document).scrollTop());
     console.log(this.endCondition());
   }
 
@@ -98,10 +113,10 @@ export default class Prompteur extends React.Component {
 
   componentDidMount(){
     Store.onChangeSpeed = this.onChange.bind(this)
-    Mousetrap.bind('j', function(e) {
-     this.switchAnimation(); 
-     return false;
-    }.bind(this));
+
+    Mousetrap.bind('j', function(e) { this.switchAnimation(); return false; }.bind(this));
+    Mousetrap.bind('right', function(){ this.addSpeed(); }.bind(this));
+    Mousetrap.bind('left', function() { this.lessSpeed(); }.bind(this));
   }
 
   render(){

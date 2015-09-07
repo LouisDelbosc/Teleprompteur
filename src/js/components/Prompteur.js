@@ -1,38 +1,66 @@
 import Store from '../store/Store'
+import TextComponent from './TextComponent'
 import React from 'react'
 import $ from 'jquery'
 import scrollTo from 'jquery.scrollto'
+import Mousetrap from 'mousetrap'
 import toastr from 'toastr'
 
 export default class Prompteur extends React.Component {
 
   constructor() {
     super();
-    let textToDisplay = Store.getText();
-    let fontSize = Store.getFontSize();
-    let pixelScroll = Store.getPixelScroll();
+    let speed = Store.getSpeed();
     this.state = {
-      text: textToDisplay,
-      fontSize: fontSize
+      run: true,
+      speed: speed
     };
+  }
+
+  endCondition() {
+    return $(document).scrollTop() === $(document).height() - $(window).height();
+  }
+
+  switchAnimation() {
+    console.log('switch');
+    console.log(this.state.run);
+    if(this.state.run === true) {
+      this.stopAnimation();
+    } else {
+      this.startAnimation();
+    }
+  }
+
+  stopAnimation() {
+    this.setState({ run: false });
+    console.log('stop');
+    $(window).stop();
+  }
+
+  startAnimation() {
+    console.log('start');
+    this.setState({ run: true });
+    this.startScrolling();
   }
 
   handleClick(e) {
     e.preventDefault();
-    let scrollTime = this.state.pixelScroll;
+    this.startScrolling();
+  }
+
+  startScrolling() {
     let scrollSize = $(document).height() - $(window).height();
-    if(this.state.pixelScroll === undefined) {
-      toastr.error('Update the number of pixel by second');
+    if(this.state.speed === undefined || this.state.speed <= 0) {
+      toastr.error('Speed not correct');
     } else {
       let nbIteration = Math.ceil(scrollSize/1000);
-      console.log(nbIteration);
-      this.scrolling(scrollTime, nbIteration);
+      this.scrolling(this.state.speed, nbIteration);
     }
   }
 
   scrolling(scrollTime, nbIteration) {
     console.log(nbIteration);
-    if( nbIteration < 0 ) {
+    if( nbIteration < 0 || this.endCondition()) {
       console.log('fini !!');
       return;
     } else {
@@ -42,9 +70,9 @@ export default class Prompteur extends React.Component {
         {easing: 'linear',
           interrupt: true,
           onAfter: function() {
-            nbIteration = Math.ceil(this.state.pixelScroll / 1000)
+            nbIteration = Math.ceil(this.state.speed / 1000);
             this.scrolling(scrollTime, nbIteration );
-          }
+          }.bind(this)
         });
     }
   }
@@ -54,39 +82,33 @@ export default class Prompteur extends React.Component {
     console.log($(document).height());
     console.log($(document).height() - $(window).height());
     console.log($(document).scrollTop());
+    console.log(this.endCondition());
   }
 
-  componentDidMount(){
-    Store.onChange = this.onChange.bind(this)
+  onChange() {
+    let speed = Store.getSpeed();
+    this.setState({
+      speed: speed,
+    });
   }
 
   componentWillUnmount() {
     this.setState({});
   }
 
-  onChange() {
-    let fontSize = Store.getFontSize();
-    let nbPixel = Store.getPixelScroll();
-    this.setState({
-      fontSize: fontSize,
-      pixelScroll: nbPixel
-    });
+  componentDidMount(){
+    Store.onChangeSpeed = this.onChange.bind(this)
+    Mousetrap.bind('j', function(e) {
+     this.switchAnimation(); 
+     return false;
+    }.bind(this));
   }
 
   render(){
-    var divStyle = {
-      fontSize: this.state.fontSize,
-      fontFamily: 'Arial'
-    };
     return(
-      <div className="pompteur" key='1'
-        style={divStyle}
-        >
-        <button onClick={this.handleClick.bind(this)} > scroll </button>
-        <p>text</p> 
-        <div className="container-fluid" >
-          {this.state.text}
-        </div>
+      <div className="prompteur" key='1' >
+        <button onClick={this.handleClick.bind(this)} > start scrolling </button>
+        <TextComponent />
         <button onClick={this.buttonTest.bind(this)} > position </button>
       </div>
     )

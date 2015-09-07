@@ -20,7 +20,10 @@ export default class Form extends React.Component {
     return(
       <div className="form" >
         <form action="return false;" >
-          <input type="text" id="text" placeholder="text you wanna display" />
+          <input 
+            type="text" 
+            id="text" 
+            placeholder="text you wanna display" />
           <button onClick={this.handleClick.bind(this)}>Click</button>
         </form>
       </div>

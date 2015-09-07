@@ -3,7 +3,7 @@ var Store = {
   state: {
     text: '',
     fontSize: 50,
-    pixelScroll: '200'
+    speed: '200'
   },
 
   saveText(text) {
@@ -12,12 +12,12 @@ var Store = {
 
   saveFontSize(fontSize) {
     this.state.fontSize = fontSize;
-    this.onChange();
+    this.onChangeFont();
   },
 
-  savePixelScroll(nbPixel) {
-    this.state.pixelScroll = nbPixel;
-    this.onChange();
+  saveSpeed(nbPixel) {
+    this.state.speed = nbPixel;
+    this.onChangeSpeed();
   },
 
   getText() {
@@ -28,11 +28,13 @@ var Store = {
     return this.state.fontSize;
   },
 
-  getPixelScroll() {
-    return this.state.pixelScroll;
+  getSpeed() {
+    return this.state.speed;
   },
 
-  onChange() {}
+  onChangeFont() {},
+
+  onChangeSpeed() {}
 
 };
 

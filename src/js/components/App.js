@@ -11,14 +11,12 @@ class App extends React.Component {
       backgroundColor: 'black'
     };
     return (
-      <div className="app"
+      <div className="container-fluid"
         style={style}
         >
-        <ul>
-          <li><Link to="/" >Home</Link></li>
-          <li><Link to="form" >Form</Link></li>
-        </ul>
-        <SettingList />
+        <div className="container" >
+          <SettingList />
+        </div>
         <RouteHandler />
       </div>
     )

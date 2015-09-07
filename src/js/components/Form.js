@@ -18,13 +18,19 @@ export default class Form extends React.Component {
 
   render(){
     return(
-      <div className="form" >
+      <div className="container" >
         <form action="return false;" >
-          <input 
-            type="text" 
-            id="text" 
-            placeholder="text you wanna display" />
-          <button onClick={this.handleClick.bind(this)}>Click</button>
+          <div className="form-group" >
+            <textarea 
+              className="form-control"
+              rows="5"
+              type="text" 
+              id="text" 
+              placeholder="text you wanna display" />
+          </div>
+          <button
+            className="btn btn-default"
+            onClick={this.handleClick.bind(this)}>Click</button>
         </form>
       </div>
     )

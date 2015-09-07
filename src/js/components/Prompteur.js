@@ -12,9 +12,16 @@ export default class Prompteur extends React.Component {
     super();
     let speed = Store.getSpeed();
     this.state = {
-      run: true,
+      run: false,
       speed: speed
     };
+  }
+
+  modifySpeed() {
+    if(this.state.run === true) {
+      $(window).stop();
+      this.startScrolling();
+    }
   }
 
   addSpeed() {
@@ -22,8 +29,7 @@ export default class Prompteur extends React.Component {
       return { speed: previousState.speed + 2 };
     });
     Store.saveSpeed(this.state.speed);
-    $(window).stop();
-    this.startScrolling();
+    this.modifySpeed();
   }
 
   lessSpeed() {
@@ -31,8 +37,7 @@ export default class Prompteur extends React.Component {
       return { speed: previousState.speed - 2 };
     });
     Store.saveSpeed(this.state.speed);
-    $(window).stop();
-    this.startScrolling();
+    this.modifySpeed();
   }
 
   endCondition() {
@@ -40,8 +45,6 @@ export default class Prompteur extends React.Component {
   }
 
   switchAnimation() {
-    console.log('switch');
-    console.log(this.state.run);
     if(this.state.run === true) {
       this.stopAnimation();
     } else {
@@ -50,13 +53,10 @@ export default class Prompteur extends React.Component {
   }
 
   stopAnimation() {
-    this.setState({ run: false });
-    console.log('stop');
     $(window).stop();
   }
 
   startAnimation() {
-    console.log('start');
     this.setState({ run: true });
     this.startScrolling();
   }
@@ -77,7 +77,6 @@ export default class Prompteur extends React.Component {
   }
 
   scrolling(scrollTime, nbIteration) {
-    console.log(nbIteration);
     if( nbIteration < 0 || this.endCondition()) {
       this.setState({ run: false });
       return;
@@ -95,11 +94,6 @@ export default class Prompteur extends React.Component {
     }
   }
 
-  buttonTest(e) {
-    e.preventDefault();
-    console.log(this.endCondition());
-  }
-
   onChange() {
     let speed = Store.getSpeed();
     this.setState({
@@ -114,17 +108,18 @@ export default class Prompteur extends React.Component {
   componentDidMount(){
     Store.onChangeSpeed = this.onChange.bind(this)
 
-    Mousetrap.bind('j', function(e) { this.switchAnimation(); return false; }.bind(this));
-    Mousetrap.bind('right', function(){ this.addSpeed(); }.bind(this));
-    Mousetrap.bind('left', function() { this.lessSpeed(); }.bind(this));
+    Mousetrap.bind('0', function(e) { this.switchAnimation(); return false; }.bind(this));
+    Mousetrap.bind('+', function(){ this.addSpeed(); }.bind(this));
+    Mousetrap.bind('-', function() { this.lessSpeed(); }.bind(this));
   }
 
   render(){
     return(
-      <div className="prompteur" key='1' >
-        <button onClick={this.handleClick.bind(this)} > start scrolling </button>
+      <div className="container-fluid" key='1' >
+        <button
+          className="btn btn-default"
+          onClick={this.handleClick.bind(this)} > start scrolling </button>
         <TextComponent />
-        <button onClick={this.buttonTest.bind(this)} > position </button>
       </div>
     )
   }

@@ -18,12 +18,14 @@ export default class SettingList extends React.Component {
     this.setState({
       fontSize: e.target.value
     });
+    Store.saveFontSize(e.target.value);
   }
 
   handleSpeedChange(e) {
     this.setState({
       speed: e.target.value
     });
+    Store.saveSpeed(e.target.value);
   }
 
   onChangeSpeedNavBar() {
@@ -39,22 +41,26 @@ export default class SettingList extends React.Component {
 
   render() {
     return (
-      <ul>
-        <li>
+      <div className="row" >
+        <div className="form-group col-md-6" >
+          <label htmlFor="exampleInputName2" > Font Size </label>
           <input
+            className="form-control"
             type="number"
             id="fontSize"
             onChange={this.handleSizeChange.bind(this)}
             value={this.state.fontSize} />
-        </li>
-        <li>
+        </div>
+        <div className="form-group col-md-6" >
+          <label htmlFor="exampleInputName2" > Second per 1000px </label>
           <input
+            className="form-control"
             type="number"
             id="speed"
             onChange={this.handleSpeedChange.bind(this)}
             value={this.state.speed} />
-        </li>
-      </ul>
+        </div>
+      </div>
     )
   }
 }

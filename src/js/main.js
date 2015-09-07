@@ -5,6 +5,7 @@ import React from 'react';
 import Router from 'react-router';
 import {DefaultRoute, Route, Routes, NotFoundRoute} from 'react-router';
 
+require('../main.less');
 require('toastr/build/toastr.min.css');
 
 let routes = (

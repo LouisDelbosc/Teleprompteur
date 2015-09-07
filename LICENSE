@@ -1,16 +1,3 @@
-#User client
-
-A teleprompter using React, Webpack, jquery scrollTo and Mousetrap.
-
-It is not a real Flux architecture (only a store) since the application was too simple.
-
-There is 3 shortcut:
-- 0 to start the scrolling animation
-- + to add 2second per 1000px (slower so)
-- - to take out 2 seconde per 1000px (faster so)
-
-#License
-
 The MIT License (MIT)
 
 Copyright (c) 2015 QQorp

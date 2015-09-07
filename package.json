@@ -11,10 +11,13 @@
   "license": "ISC",
   "devDependencies": {
     "babel-loader": "^5.1.4",
+    "bootstrap-less": "^3.3.8",
     "css-loader": "^0.15.3",
     "file-loader": "^0.8.4",
     "jquery": "^2.1.4",
     "jquery.scrollto": "^2.1.1",
+    "less": "^2.5.1",
+    "less-loader": "^2.2.0",
     "lodash": "^3.10.0",
     "mousetrap": "^1.5.3",
     "node-libs-browser": "^0.5.2",

@@ -8,6 +8,7 @@ class App extends React.Component {
   render() {
     var style = {
       color: 'white',
+      backgroundSize: '100% 100%',
       backgroundColor: 'black'
     };
     return (

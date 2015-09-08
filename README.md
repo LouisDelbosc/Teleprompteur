@@ -9,6 +9,14 @@ There is 3 shortcut:
 - + to add 2second per 1000px (slower so)
 - - to take out 2 seconde per 1000px (faster so)
 
+# Run the server
+You must install [Docker](https://docs.docker.com/installation/) first.
+Then you can run the server :
+```shell
+docker build -t my_awesome_name .
+docker run -d -p 80:80 my_awesome_name
+```
+
 #License
 
 The MIT License (MIT)
